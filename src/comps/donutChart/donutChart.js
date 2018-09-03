@@ -14,7 +14,9 @@ class DonutChart extends React.Component {
     var w = 200,
       h = 400,
       r = Math.min(w, h) / 2,
-      labelr = r + 10, // radius for label anchor
+      spaceBetweenLegends = 30,
+      legendsVerticalPosition =
+        ((data.length - 1) * spaceBetweenLegends) / 2 + 30,
       color = d3.scale.category20(),
       donut = d3.layout.pie(),
       arc = d3.svg
@@ -29,10 +31,36 @@ class DonutChart extends React.Component {
       .attr("width", w + 150)
       .attr("height", h);
 
+    var legends = vis
+      .append("g")
+      .attr("class", "customD3LegendGroup")
+      .attr("transform", "translate(" + (r + r + 70) + "," + r + ")");
+
     var arcs = vis
       .selectAll("g.arc")
       .data(
-        donut.value(function(d) {
+        donut.value(function(d, i) {
+          var legend = legends
+            .append("g")
+            .attr(
+              "transform",
+              "translate(" + 0 + "," + spaceBetweenLegends * i + ")"
+            )
+            .on("click", datum => {
+              console.log(d3.mouse(this)); // the datum for the clicked circle
+            });
+          legend
+            .append("circle") // attach a circle
+            .attr("cx", -10) // position the x-centre
+            .attr("cy", -6) // position the y-centre
+            .attr("r", 6) // set the radius
+            .style("fill", color(i));
+          legend
+            .append("text")
+            // .attr("y", legendVerticalSpace) //magic number here
+            .attr("x", 0)
+            // .attr("text-anchor", "middle")
+            .text(d["name"]);
           return d.val;
         })
       )
@@ -47,18 +75,6 @@ class DonutChart extends React.Component {
         return color(i);
       })
       .attr("d", arc);
-
-    var legends = vis
-      .append("g")
-      .attr("transform", "translate(" + (r + r + 90) + "," + r + ")");
-
-    legends
-      .append("text")
-      .attr("y", 0) //magic number here
-      .attr("x", 0)
-      .attr("text-anchor", "middle")
-      .attr("class", "legendItems") //easy to style with CSS
-      .text("I'm a label");
   };
   componentDidMount() {
     this.drawChart();
