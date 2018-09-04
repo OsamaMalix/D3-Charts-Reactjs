@@ -75,18 +75,18 @@ class DonutChart extends React.Component {
       .attr("fill", function(d, i) {
         return color(i);
       })
-      .attr("d", arc);
-    //Animation
-    // .transition()
-    // .duration(750)
-    // .ease(d3.easeLinear)
-    // .attrTween("d", function(d) {
-    //   var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
-    //   return function(t) {
-    //     d.endAngle = i(t);
-    //     return arc(d);
-    //   };
-    // });
+      .attr("d", arc)
+      //Animation
+      .transition()
+      .duration(750)
+      // .ease(d3.easeLinear);
+      .attrTween("d", function(d) {
+        var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
+        return function(t) {
+          d.endAngle = i(t);
+          return arc(d);
+        };
+      });
   };
   componentDidMount() {
     this.drawChart();
