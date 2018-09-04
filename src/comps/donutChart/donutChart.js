@@ -47,7 +47,7 @@ class DonutChart extends React.Component {
               "translate(" + 0 + "," + spaceBetweenLegends * i + ")"
             )
             .on("click", datum => {
-              console.log(d3.mouse(this)); // the datum for the clicked circle
+              console.log(d3.event.path[0]); // the datum for the clicked circle
             });
           legend
             .append("circle") // attach a circle
