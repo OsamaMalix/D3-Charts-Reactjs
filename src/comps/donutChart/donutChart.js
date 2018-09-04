@@ -47,7 +47,8 @@ class DonutChart extends React.Component {
               "translate(" + 0 + "," + spaceBetweenLegends * i + ")"
             )
             .on("click", datum => {
-              console.log(d3.select(d3.event.path[0]).text()); // the datum for the clicked circle
+              // console.log(d3.select(d3.event.path[0]).text());
+              console.log(d3.event.explicitOriginalTarget.data);
             });
           legend
             .append("circle") // attach a circle
@@ -75,6 +76,17 @@ class DonutChart extends React.Component {
         return color(i);
       })
       .attr("d", arc);
+    //Animation
+    // .transition()
+    // .duration(750)
+    // .ease(d3.easeLinear)
+    // .attrTween("d", function(d) {
+    //   var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
+    //   return function(t) {
+    //     d.endAngle = i(t);
+    //     return arc(d);
+    //   };
+    // });
   };
   componentDidMount() {
     this.drawChart();
