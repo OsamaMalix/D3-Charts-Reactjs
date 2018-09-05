@@ -28,7 +28,7 @@ class DonutChart extends React.Component {
       .select("#donutChart")
       .append("svg:svg")
       .data([data])
-      .attr("width", w + 150)
+      .attr("width", w + 200)
       .attr("height", h);
 
     var legends = vis
@@ -47,8 +47,9 @@ class DonutChart extends React.Component {
               "translate(" + 0 + "," + spaceBetweenLegends * i + ")"
             )
             .on("click", datum => {
+              console.log(d3.event.target.textContent);
               // console.log(d3.select(d3.event.path[0]).text());
-              console.log(d3.event.explicitOriginalTarget.data);
+              // console.log(d3.event.explicitOriginalTarget.data);
             });
           legend
             .append("circle") // attach a circle
@@ -61,7 +62,7 @@ class DonutChart extends React.Component {
             // .attr("y", legendVerticalSpace) //magic number here
             .attr("x", 0)
             // .attr("text-anchor", "middle")
-            .text(d["name"]);
+            .text(d["name"] + " where is destiny");
           return d.val;
         })
       )
