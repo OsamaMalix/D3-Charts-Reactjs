@@ -3,14 +3,14 @@ import d3 from "d3";
 
 import style from "./donutChart.css";
 
-class DonutChart extends React.Component {
-  drawChart = () => {
-    var data = [
-      { name: "A", val: 11975 },
-      { name: "B", val: 5871 },
-      { name: "C", val: 8916 }
-    ];
+const mockData = [
+  { name: "A", val: 11975 },
+  { name: "B", val: 5871 },
+  { name: "C", val: 8916 }
+];
 
+class DonutChart extends React.Component {
+  drawChart = data => {
     var w = 200,
       h = 400,
       r = Math.min(w, h) / 2,
@@ -90,7 +90,7 @@ class DonutChart extends React.Component {
       });
   };
   componentDidMount() {
-    this.drawChart();
+    this.drawChart(mockData);
   }
   render() {
     return <div id="donutChart" />;
